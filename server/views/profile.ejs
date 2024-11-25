@@ -1,0 +1,35 @@
+<%- include('partials/_header') %>
+<main>
+  <div class="container mt-5">
+    <h1 class="text-center text-success mb-4">Your Profile</h1>
+
+    <div class="row justify-content-center">
+      <div class="col-md-6">
+        <div class="card shadow-lg">
+          <div class="card-body">
+            <h2 class="text-center">Welcome, <%= user.name %>!</h2>
+            <ul class="list-group mt-4">
+              <li class="list-group-item">
+                <strong>Name:</strong> <%= user.name %>
+              </li>
+              <li class="list-group-item">
+                <strong>Email:</strong> <%= user.email %>
+              </li>
+              <li class="list-group-item">
+                <strong>Favorite Genre:</strong> <%= user.favoriteGenre || 'Not specified' %>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="text-center mt-4">
+      <a href="/books" class="btn btn-success btn-lg">
+        <i class="fas fa-book"></i> Go to Library
+      </a>
+    </div>
+  </div>
+</main>
+
+<%- include('partials/_footer') %>

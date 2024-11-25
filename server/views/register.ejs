@@ -1,0 +1,74 @@
+<%- include('partials/_header') %>
+<main>
+  <div class="container mt-5">
+    <h1 class="text-center text-success mb-4">Sign Up for an Account</h1>
+
+    <div class="row justify-content-center">
+      <div class="col-md-6">
+        <div class="card shadow-lg">
+          <div class="card-body">
+            <form action="/users/signup" method="POST">
+              <!-- Name Field -->
+              <div class="mb-3">
+                <label for="name" class="form-label"><i class="fas fa-user"></i> Full Name</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="name"
+                  name="name"
+                  placeholder="Enter your full name"
+                  required
+                />
+              </div>
+
+              <!-- Email Field -->
+              <div class="mb-3">
+                <label for="email" class="form-label"><i class="fas fa-envelope"></i> Email Address</label>
+                <input
+                  type="email"
+                  class="form-control"
+                  id="email"
+                  name="email"
+                  placeholder="Enter your email address"
+                  required
+                />
+              </div>
+
+              <!-- Password Field -->
+              <div class="mb-3">
+                <label for="password" class="form-label"><i class="fas fa-lock"></i> Password</label>
+                <input
+                  type="password"
+                  class="form-control"
+                  id="password"
+                  name="password"
+                  placeholder="Create a password"
+                  required
+                />
+              </div>
+
+              <!-- Favorite Genre Field -->
+              <div class="mb-3">
+                <label for="favoriteGenre" class="form-label"><i class="fas fa-book"></i> Favorite Genre</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="favoriteGenre"
+                  name="favoriteGenre"
+                  placeholder="Enter your favorite genre (optional)"
+                />
+              </div>
+
+              <!-- Submit Button -->
+              <div class="d-grid">
+                <button type="submit" class="btn btn-success btn-block"><i class="fas fa-user-plus"></i> Sign Up</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<%- include('partials/_footer') %>

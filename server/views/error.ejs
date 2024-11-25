@@ -1,0 +1,7 @@
+<%- include('partials/_header') %>
+<div class="container mt-5">
+  <h1 class="text-danger"><%= message %></h1>
+  <h2 class="text-warning"><%= error.status %></h2>
+  <pre class="text-muted"><%= error.stack %></pre>
+</div>
+<%- include('partials/_footer') %>

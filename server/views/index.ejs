@@ -1,0 +1,38 @@
+<%- include('partials/_header') %>
+<main>
+  <div class="container text-center mt-5">
+    <h1 class="display-4">Welcome to <span class="text-primary">My Book Haven</span></h1>
+    <p class="lead">
+      Organize your personal library, track your reading journey, and discover new books!
+    </p>
+    <div class="mt-4">
+      <a href="/users/signup" class="btn btn-primary btn-lg">
+        <i class="fas fa-user-plus"></i> Join Now
+      </a>
+      <a href="/users/signin" class="btn btn-success btn-lg">
+        <i class="fas fa-sign-in-alt"></i> Sign In
+      </a>
+    </div>
+  </div>
+
+  <div class="container mt-5">
+    <div class="row">
+      <div class="col-md-4 text-center">
+        <i class="fas fa-book-open fa-3x text-info"></i>
+        <h3 class="mt-3">Catalog Your Books</h3>
+        <p>Maintain a detailed catalog of all the books you own and love.</p>
+      </div>
+      <div class="col-md-4 text-center">
+        <i class="fas fa-tasks fa-3x text-primary"></i>
+        <h3 class="mt-3">Track Your Reading</h3>
+        <p>Keep a log of your reading progress and set personal reading goals.</p>
+      </div>
+      <div class="col-md-4 text-center">
+        <i class="fas fa-search fa-3x text-secondary"></i>
+        <h3 class="mt-3">Explore New Reads</h3>
+        <p>Find new books to read based on your interests and preferences.</p>
+      </div>
+    </div>
+  </div>
+</main>
+<%- include('partials/_footer') %>

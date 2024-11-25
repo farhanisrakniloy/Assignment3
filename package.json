@@ -1,0 +1,37 @@
+{
+  "name": "booklibrary",
+  "version": "1.0.0",
+  "description": "This is a book library management web app",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mohamadreza121/booklibrary.git"
+  },
+  "author": "farhanisrak",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mohamadreza121/booklibrary/issues"
+  },
+  "homepage": "https://github.com/mohamadreza121/booklibrary#readme",
+  "keywords": [],
+  "dependencies": {
+    "@fortawesome/fontawesome-free": "^6.7.1",
+    "bcryptjs": "^2.4.3",
+    "bootstrap": "^5.3.3",
+    "cookie-parser": "^1.4.7",
+    "debug": "^4.3.7",
+    "dotenv": "^16.4.5",
+    "ejs": "^3.1.10",
+    "express": "^4.21.1",
+    "http-errors": "^1.8.1",
+    "joi": "^17.13.3",
+    "jsonwebtoken": "^9.0.2",
+    "mongodb": "^6.10.0",
+    "mongoose": "^8.8.2",
+    "morgan": "^1.10.0"
+  }
+}
