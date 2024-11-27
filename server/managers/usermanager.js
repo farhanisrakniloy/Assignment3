@@ -1,4 +1,4 @@
-const User = require('../model/user');
+const User = require('server\model\libUser.js');
 const jwt = require('jsonwebtoken');
 
 // Create JWT Token

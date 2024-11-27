@@ -1,5 +1,5 @@
 const Book = require('../model/book');
-const User = require('../models/libUser');
+const User = require('../model/libUser');
 const jwt = require('jsonwebtoken');
 
 // Create JWT Token

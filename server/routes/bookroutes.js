@@ -1,53 +1,52 @@
 const express = require('express');
-const { ensureAuthenticated } = require('../middleware/auth'); // Ensure authentication middleware is imported
-const Book = require('../models/book'); // Ensure the Book model is imported
-
 const router = express.Router();
+const Book = require('../model/book.js'); // Ensure the Book model is imported
 
-// Route to render the book library page with required data
-router.get('/', ensureAuthenticated, async (req, res) => {
+// GET /book - Render the book page with books
+router.get('/', async (req, res) => {
   try {
-    let books = [];
-
-    // If the user is logged in, fetch their data
-    if (req.user) {
-      books = await Book.find({ userId: req.user._id });
-    }
-
-    res.render('library', {
-      books,
-      user: req.user || null, // Pass user for additional context
-    });
+    const books = await Book.find();
+    res.render('book', { books, user: req.user });
   } catch (error) {
-    console.error('Error fetching book data:', error.message);
-    res.status(500).render('error', { message: 'Failed to load book data.', error });
+    console.error('Error fetching books:', error.message);
+    res.status(500).render('error', { message: 'Failed to load books.', error });
+  }
+});
+
+// GET /library - Render the library page with books
+router.get('/library', async (req, res) => {
+  try {
+    const books = await Book.find();
+    res.render('library', { books, user: req.user });
+  } catch (error) {
+    console.error('Error fetching books:', error.message);
+    res.status(500).render('error', { message: 'Failed to load books.', error });
   }
 });
 
 // API Route: Add a new book entry (requires login)
-router.post('/add', ensureAuthenticated, async (req, res) => {
+router.post('/add', async (req, res) => {
   try {
-    const { title, author, publishedDate } = req.body;
-
-    // Ensure all required fields are provided
-    if (!title || !author || !publishedDate) {
-      return res.status(400).render('error', { message: 'All fields are required.' });
+    if (!req.user) {
+      return res.status(401).json({ message: 'Unauthorized' });
     }
 
-    const normalizedTitle = title.trim().toLowerCase();
-
-    // Insert a new book record
-    await Book.create({
-      title: normalizedTitle,
+    const { title, author, description, genre, publish_year, coverImagePath } = req.body;
+    const newBook = new Book({
+      title,
       author,
-      publishedDate,
+      description,
+      genre,
+      publish_year,
+      coverImagePath,
       userId: req.user._id,
-      image: `${normalizedTitle.replace(/\s+/g, '_')}.jpg`, // Auto-generate image name
     });
 
-    res.redirect('/books'); // Redirect to the book list after successful creation
-  } catch (err) {
-    res.status(400).render('error', { message: 'Unable to create book. ' + err.message });
+    await newBook.save();
+    res.status(201).json({ message: 'Book added successfully' });
+  } catch (error) {
+    console.error('Error adding book:', error.message);
+    res.status(500).json({ message: 'Failed to add book', error });
   }
 });
 

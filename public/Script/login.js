@@ -27,7 +27,7 @@ document.addEventListener('DOMContentLoaded', () => {
           }
   
           // Redirect to the dashboard page
-          window.location.href = '/users/dashboard';
+          window.location.href = '/Script/dashboard';
         } catch (err) {
           console.error('Error:', err);
           alert('An error occurred while signing in.');

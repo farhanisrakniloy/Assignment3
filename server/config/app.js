@@ -1,11 +1,12 @@
 const express = require('express');
-const { authenticate, identifyUser } = require('../middleware/AuthGuard'); // Ensure this path is correct
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const dotenv = require('dotenv');
 const connectDB = require('./db'); // Database connection
 const createError = require('http-errors');
+const session = require('express-session');
+const passport = require('../routes/passport'); // Adjust the path to your Passport configuration
 
 // Load environment variables
 dotenv.config();
@@ -25,25 +26,28 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(authenticate); // Use the authenticate middleware
-app.use(identifyUser); // Use the identifyUser middleware
 app.use(express.static(path.join(__dirname, '../../public')));
 app.use(express.static(path.join(__dirname, '../../node_modules')));
 
-// Make user available in all views
-app.use((req, res, next) => {
-  res.locals.user = req.user || null; // Pass `req.user` to all views or null if not logged in
-  next();
-});
+// Session setup
+app.use(session({
+  secret: 'your_secret_key',
+  resave: false,
+  saveUninitialized: false
+}));
 
-// Routes setup
-const indexRouter = require('../routes/index'); // Corrected path
-const booksRouter = require('../routes/bookroutes'); // Corrected path
-const usersRouter = require('../routes/users'); // Corrected path
+// Initialize Passport and restore authentication state, if any, from the session
+app.use(passport.initialize());
+app.use(passport.session());
+
+// Define your routes here
+const indexRouter = require('../routes/index');
+const usersRouter = require('../routes/users');
+const booksRouter = require('../routes/bookroutes');
 
 app.use('/', indexRouter);
-app.use('/books', booksRouter);
 app.use('/users', usersRouter);
+app.use('/books', booksRouter);
 
 // Catch 404 and forward to error handler
 app.use((req, res, next) => {

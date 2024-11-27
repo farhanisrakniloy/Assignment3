@@ -1,0 +1,50 @@
+<%- include('partials/_header') %>
+<main>
+  <div class="container mt-5">
+    <h1 class="text-center">Dashboard</h1>
+    <div id="loading" style="display: none;">Loading...</div>
+    
+    <div class="row mb-4">
+      <div class="col-md-6">
+        <h2>Total Books: <span id="totalBooks">0</span></h2>
+      </div>
+      <div class="col-md-6 text-end">
+        <button id="logoutButton" class="btn btn-danger">Logout</button>
+      </div>
+    </div>
+
+    <div class="row mb-4">
+      <div class="col-12">
+        <h3>Book List</h3>
+        <ul id="bookList" class="list-group">
+          <!-- Book items will be dynamically inserted here -->
+        </ul>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-12">
+        <h3>Add a New Book</h3>
+        <form id="addBookForm">
+          <div class="mb-3">
+            <label for="title" class="form-label">Title</label>
+            <input type="text" class="form-control" id="title" name="title" required>
+          </div>
+          <div class="mb-3">
+            <label for="author" class="form-label">Author</label>
+            <input type="text" class="form-control" id="author" name="author" required>
+          </div>
+          <div class="mb-3">
+            <label for="publishedDate" class="form-label">Published Date</label>
+            <input type="date" class="form-control" id="publishedDate" name="publishedDate" required>
+          </div>
+          <button type="submit" class="btn btn-primary">Add Book</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</main>
+<%- include('partials/_footer') %>
+
+<!-- Include the dashboard script -->
+<script src="/Script/dashboard.js"></script>
