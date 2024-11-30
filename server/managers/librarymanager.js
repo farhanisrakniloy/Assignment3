@@ -3,7 +3,11 @@ const User = require('../model/libUser');
 const jwt = require('jsonwebtoken');
 
 // Create JWT Token
-const createToken = (id) => jwt.sign({ id }, process.env.JWT_SECRET, { expiresIn: '30d' });
+const createToken = (id) => {
+  return jwt.sign({ id }, process.env.JWT_SECRET, {
+    expiresIn: '30d',
+  });
+};
 
 // Create a new book record
 const createBook = async (req, res) => {
@@ -42,32 +46,23 @@ const fetchBooks = async (req, res) => {
 
 // Sign Up User
 const signUpUser = async (req, res) => {
-  const { name, email, password } = req.body;
+  const { name, email, password, confirmPassword } = req.body;
+
+  if (password !== confirmPassword) {
+    return res.status(400).render('signup', { message: 'Passwords do not match' });
+  }
 
   try {
-    const existingUser = await User.findOne({ email });
-    if (existingUser) {
-      return res.status(400).render('signup', { message: 'Email already in use' });
-    }
-
-    const newUser = await User.create({
-      name,
-      email,
-      password,
-    });
-
-    if (newUser) {
-      const token = createToken(newUser._id);
-      res
-        .cookie('token', token, {
-          httpOnly: true,
-          secure: process.env.NODE_ENV === 'production',
-          maxAge: 30 * 24 * 60 * 60 * 1000,
-        })
-        .redirect('/users/dashboard');
-    } else {
-      res.status(400).render('signup', { message: 'User creation failed. Please try again.' });
-    }
+    const user = new User({ name, email, password });
+    await user.save();
+    const token = createToken(user._id);
+    res
+      .cookie('token', token, {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === 'production',
+        maxAge: 30 * 24 * 60 * 60 * 1000,
+      })
+      .redirect('/users/dashboard');
   } catch (err) {
     res.status(400).render('signup', { message: 'Error: ' + err.message });
   }
@@ -80,7 +75,7 @@ const signInUser = async (req, res) => {
   try {
     const user = await User.findOne({ email });
 
-    if (user && (await user.matchPassword(password))) {
+    if (user && (await user.comparePassword(password))) {
       const token = createToken(user._id);
       res
         .cookie('token', token, {
@@ -99,8 +94,7 @@ const signInUser = async (req, res) => {
 
 // Sign Out User
 const signOutUser = (req, res) => {
-  res.clearCookie('token');
-  res.redirect('/users/signin');
+  res.clearCookie('token').redirect('../users/signin');
 };
 
 module.exports = {

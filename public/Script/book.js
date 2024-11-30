@@ -1,3 +1,17 @@
+const mongoose = require('mongoose');
+
+const bookSchema = new mongoose.Schema({
+  title: { type: String, required: true },
+  author: { type: String, required: true },
+  description: { type: String },
+  genre: { type: String },
+  publish_year: { type: Number },
+  coverImagePath: { type: String },
+  userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
+});
+
+module.exports = mongoose.model('Book', bookSchema);
+
 document.getElementById('searchButton').addEventListener('click', async () => {
     const query = document.getElementById('searchInput').value.trim(); // Get the search input
     if (!query) {
@@ -38,3 +52,45 @@ document.getElementById('searchButton').addEventListener('click', async () => {
       alert('An error occurred while fetching search results.');
     }
   });
+
+document.addEventListener('DOMContentLoaded', () => {
+  const searchResults = document.getElementById('searchResults');
+
+  if (searchResults) {
+    searchResults.addEventListener('click', async (e) => {
+      if (e.target.classList.contains('add-book-btn')) {
+        const button = e.target;
+        const title = button.getAttribute('data-title');
+        const author = button.getAttribute('data-author');
+        const publishedDate = button.getAttribute('data-publishedDate');
+
+        const bookData = {
+          title,
+          author,
+          publishedDate,
+        };
+
+        try {
+          const response = await fetch('/books/add', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(bookData),
+          });
+
+          if (!response.ok) {
+            const errorData = await response.json();
+            alert(errorData.message || 'Failed to add book');
+            return;
+          }
+
+          alert('Book added successfully');
+        } catch (error) {
+          console.error('Error:', error);
+          alert('An error occurred while adding the book.');
+        }
+      }
+    });
+  }
+});

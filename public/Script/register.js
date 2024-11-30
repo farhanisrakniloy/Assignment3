@@ -14,7 +14,7 @@ document.addEventListener('DOMContentLoaded', () => {
         };
   
         try {
-          const response = await fetch('/users/signup', {
+          const response = await fetch('../server/signup', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
@@ -26,7 +26,7 @@ document.addEventListener('DOMContentLoaded', () => {
   
           if (response.ok) {
             localStorage.setItem('authToken', result.token); // Save the token in localStorage
-            window.location.href = '/users/dashboard'; // Redirect to dashboard
+            window.location.href = '../Script/dashboard'; // Redirect to dashboard
           } else {
             alert(result.message || 'Registration failed');
           }

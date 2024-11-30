@@ -7,6 +7,7 @@ const connectDB = require('./db'); // Database connection
 const createError = require('http-errors');
 const session = require('express-session');
 const passport = require('../routes/passport'); // Adjust the path to your Passport configuration
+const flash = require('connect-flash'); // Import connect-flash
 
 // Load environment variables
 dotenv.config();
@@ -39,6 +40,9 @@ app.use(session({
 // Initialize Passport and restore authentication state, if any, from the session
 app.use(passport.initialize());
 app.use(passport.session());
+
+// Use connect-flash
+app.use(flash());
 
 // Define your routes here
 const indexRouter = require('../routes/index');

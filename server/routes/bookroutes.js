@@ -1,8 +1,8 @@
 const express = require('express');
 const router = express.Router();
-const Book = require('../model/book.js'); // Ensure the Book model is imported
+const Book = require('../model/book'); // Ensure the Book model is imported
 
-// GET /book - Render the book page with books
+// GET /books - Render the books page with books
 router.get('/', async (req, res) => {
   try {
     const books = await Book.find();
@@ -13,18 +13,7 @@ router.get('/', async (req, res) => {
   }
 });
 
-// GET /library - Render the library page with books
-router.get('/library', async (req, res) => {
-  try {
-    const books = await Book.find();
-    res.render('library', { books, user: req.user });
-  } catch (error) {
-    console.error('Error fetching books:', error.message);
-    res.status(500).render('error', { message: 'Failed to load books.', error });
-  }
-});
-
-// API Route: Add a new book entry (requires login)
+// POST /books/add - Handle adding a new book
 router.post('/add', async (req, res) => {
   try {
     if (!req.user) {

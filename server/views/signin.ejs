@@ -2,7 +2,10 @@
 <main>
   <div class="container mt-5">
     <h1 class="text-center">Sign In</h1>
-    <form action="/users/signin" method="POST">
+    <% if (message) { %>
+      <div class="alert alert-danger"><%= message %></div>
+    <% } %>
+    <form id="loginForm" action="/users/signin" method="POST">
       <div class="mb-3">
         <label for="email" class="form-label">Email address</label>
         <input type="email" class="form-control" id="email" name="email" required>
@@ -16,3 +19,6 @@
   </div>
 </main>
 <%- include('partials/_footer') %>
+
+<!-- Include the login script -->
+<script src="/Script/signin.js"></script>

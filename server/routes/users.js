@@ -9,7 +9,7 @@ const {
 
 // GET /signup - Render the signup form
 router.get('/signup', (req, res) => {
-  res.render('signup', { title: 'Sign Up' });
+  res.render('signup', { title: 'Sign Up', message: req.flash('error') });
 });
 
 // POST /signup - Handle signup form submission
@@ -17,7 +17,7 @@ router.post('/signup', signUpUser);
 
 // GET /signin - Render the signin form
 router.get('/signin', (req, res) => {
-  res.render('signin', { title: 'Sign In' });
+  res.render('signin', { title: 'Sign In', message: req.flash('error') });
 });
 
 // POST /signin - Handle signin
